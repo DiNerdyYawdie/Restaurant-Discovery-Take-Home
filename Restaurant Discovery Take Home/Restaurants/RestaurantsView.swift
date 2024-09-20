@@ -15,9 +15,12 @@ struct RestaurantsView: View {
         VStack {
             Text("Restaurants")
         }
+        .task {
+            await viewModel.fetchRestaurants()
+        }
     }
 }
 
 #Preview {
-    RestaurantsView(viewModel: RestaurantsViewModel())
+    RestaurantsView(viewModel: RestaurantsViewModel(restaurantServices: RestaurantServicesImpl()))
 }
