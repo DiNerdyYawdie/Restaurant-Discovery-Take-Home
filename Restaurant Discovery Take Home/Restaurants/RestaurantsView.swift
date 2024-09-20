@@ -8,11 +8,16 @@
 import SwiftUI
 
 struct RestaurantsView: View {
+    
+    @ObservedObject var viewModel: RestaurantsViewModel
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Text("Restaurants")
+        }
     }
 }
 
 #Preview {
-    RestaurantsView()
+    RestaurantsView(viewModel: RestaurantsViewModel())
 }
