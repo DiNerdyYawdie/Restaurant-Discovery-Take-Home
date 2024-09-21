@@ -15,18 +15,13 @@ enum Endpoints {
     private var baseURL: String {
         return "https://places.googleapis.com/v1"
     }
-    
-    // API Key for Google Places
-    private var apiKey: String {
-        return "AIzaSyAvAaPcSL1SNPUguENa_p2P-SuRaxGUduw"
-    }
 
     var endpoint: String {
         switch self {
         
         case .restaurantsNearby(latitude: let latitude, longitude: let longitude):
             // TODO: Update endpoint
-            return "\(baseURL)/places:searchNearby?fields=*&key=\(apiKey)&location=\(latitude),\(longitude)&language=en"
+            return "\(baseURL)/places:searchNearby"
         case .restaurantsSearch:
             return "\(baseURL)/places:searchText"
         }

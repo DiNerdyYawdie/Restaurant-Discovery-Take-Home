@@ -22,7 +22,7 @@ class RestaurantsViewModel: ObservableObject {
     func fetchRestaurants() async {
         do {
             self.restaurants = try await restaurantServices.searchRestaurants(with: searchText)
-            dump(self.restaurants)
+            
         } catch {
             print(error)
         }
