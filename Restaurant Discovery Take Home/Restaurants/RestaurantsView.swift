@@ -15,30 +15,60 @@ struct RestaurantsView: View {
         VStack {
             
             Image(.logoLockup)
-
-            TextField("Search", text: $viewModel.searchText)
-                .padding(.horizontal)
-                .textFieldStyle(.roundedBorder)
-                .onSubmit {
-                    Task {
-                        await viewModel.fetchRestaurants()
-                    }
-                }
+                .padding(.top, 20)
+                .padding(.bottom, 16)
             
-            List(viewModel.restaurants) { restaurant in
+            HStack(spacing: 8) {
+                Image(.search)
                 
-                RestaurantCardView(restaurant: restaurant) { restaurant in
-                    
-                }
-                .listRowBackground(Color.clear)
-                
+                TextField("Search restaurants", text: $viewModel.searchText)
+                    .submitLabel(.search)
+                    .onSubmit {
+                        Task {
+                            await viewModel.fetchRestaurants()
+                        }
+                    }
             }
-            .listStyle(.plain)
-            .background(Color(red: 239, green: 239, blue: 236))
-           
+            .padding(.horizontal)
+            .background(Color(.systemGray6))
+            .cornerRadius(25)
+            .shadow(radius: 1)
+            .padding(.horizontal)
+            .padding(.bottom, 15)
+            ZStack(alignment: .centerLastTextBaseline) {
+                
+                if viewModel.showMapView {
+                    Text("Map")
+                } else {
+                    List(viewModel.restaurants) { restaurant in
+                        
+                        RestaurantCardView(restaurant: restaurant) { restaurant in
+                            
+                        }
+                        .listRowBackground(Color.clear)
+                        
+                    }
+                    .listStyle(.plain)
+                    .background(Color(.systemGray6))
+                }
+                
+                Button {
+                    viewModel.showMapView.toggle()
+                } label: {
+                    Label(LocalizedStringKey("Map"), image: .map)
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(.green)
+            }
+            
         }
         .task {
             await viewModel.fetchRestaurants()
+        }
+        .overlay {
+            if viewModel.isLoading {
+                ProgressView()
+            }
         }
     }
 }

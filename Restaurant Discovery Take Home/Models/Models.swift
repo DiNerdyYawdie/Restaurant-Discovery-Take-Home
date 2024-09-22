@@ -17,8 +17,17 @@ struct Restaurant: Identifiable, Decodable {
     let formattedAddress: String
     let rating: Double
     let displayName: RestaurantDisplayName
+    let photos: [RestaurantPhotos]
+    
 }
 
 struct RestaurantDisplayName: Decodable {
     let text: String
+}
+
+struct RestaurantPhotos: Decodable {
+    let name: String
+    let widthPx: Int
+    let heightPx: Int
+    
 }

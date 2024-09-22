@@ -12,6 +12,10 @@ class RestaurantsViewModel: ObservableObject {
     @Published var restaurants: [Restaurant] = []
     @Published var searchText: String = ""
     
+    @Published var showMapView: Bool = false
+    
+    @Published var isLoading: Bool = false
+    
     let restaurantServices: RestaurantServices
     
     init(restaurantServices: RestaurantServices) {
@@ -21,9 +25,11 @@ class RestaurantsViewModel: ObservableObject {
     @MainActor
     func fetchRestaurants() async {
         do {
+            isLoading = true
             self.restaurants = try await restaurantServices.searchRestaurants(with: searchText)
-            
+            isLoading = false
         } catch {
+            isLoading = false
             print(error)
         }
     }

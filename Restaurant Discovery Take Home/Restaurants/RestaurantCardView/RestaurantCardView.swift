@@ -16,11 +16,10 @@ struct RestaurantCardView: View {
         HStack(alignment: .top, spacing: 16) {
             
             // Image placeholder
-            Image(systemName: "photo")
+            Image(.placeholder)
                 .resizable()
-                .frame(width: 80, height: 80)
+                .frame(width: 64, height: 72)
                 .aspectRatio(contentMode: .fill)
-                .cornerRadius(10)
             
             VStack(alignment: .leading, spacing: 8) {
                 // Placeholder for restaurant name
@@ -29,8 +28,10 @@ struct RestaurantCardView: View {
                 
                 // Placeholder for rating and reviews
                 HStack {
-                    Image(systemName: "star.fill")
-                        .foregroundColor(.green)
+                    Image(.star)
+                        .resizable()
+                        .frame(width: 16, height: 16)
+                    
                     Text(String(restaurant.rating))
                     Text("•")
                     Text("(reviews)")
@@ -50,7 +51,7 @@ struct RestaurantCardView: View {
             Button(action: {
                 onFavoriteSelected(restaurant)
             }) {
-                Image(systemName: "bookmark")
+                Image(.bookmarkResting)
                     .foregroundColor(.green)
             }
         }
@@ -63,7 +64,7 @@ struct RestaurantCardView: View {
 
 
 #Preview {
-    RestaurantCardView(restaurant: Restaurant(id: UUID().uuidString, types: ["Jamaican"], formattedAddress: "1 Hayes Lane", rating: 4.0, displayName: RestaurantDisplayName(text: "Jahmske"))) { _ in
+    RestaurantCardView(restaurant: Restaurant(id: UUID().uuidString, types: ["Jamaican"], formattedAddress: "1 Hayes Lane", rating: 4.0, displayName: RestaurantDisplayName(text: "Jahmske"), photos: [RestaurantPhotos(name: "", widthPx: 1, heightPx: 1)])) { _ in
         
     }
 }
