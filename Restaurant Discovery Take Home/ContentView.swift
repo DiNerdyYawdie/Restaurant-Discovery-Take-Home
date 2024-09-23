@@ -12,7 +12,7 @@ struct ContentView: View {
     let restaurantServices: RestaurantServices = RestaurantServicesImpl()
     
     var body: some View {
-        RestaurantsView(viewModel: RestaurantsViewModel(restaurantServices: restaurantServices))
+        RestaurantsView(viewModel: RestaurantsViewModel(restaurantServices: restaurantServices, locationServices: LocationServicesImpl()))
     }
 }
 

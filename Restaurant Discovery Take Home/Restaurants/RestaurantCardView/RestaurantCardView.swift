@@ -32,7 +32,7 @@ struct RestaurantCardView: View {
                         .resizable()
                         .frame(width: 16, height: 16)
                     
-                    Text(String(restaurant.rating))
+                    Text(String(restaurant.rating ?? 0))
                     Text("•")
                     Text("(reviews)")
                         .foregroundColor(.gray)

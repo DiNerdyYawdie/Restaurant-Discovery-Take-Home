@@ -15,9 +15,9 @@ struct Restaurant: Identifiable, Decodable {
     let id: String
     let types: [String]
     let formattedAddress: String
-    let rating: Double
+    let rating: Double?
     let displayName: RestaurantDisplayName
-    let photos: [RestaurantPhotos]
+    let photos: [RestaurantPhotos]?
     
 }
 
@@ -30,4 +30,22 @@ struct RestaurantPhotos: Decodable {
     let widthPx: Int
     let heightPx: Int
     
+}
+
+struct NearbyRequest: Encodable {
+    let locationRestriction: LocationRestriction
+}
+
+struct LocationRestriction: Encodable {
+    let circle: LocationCircle
+}
+
+struct LocationCircle: Encodable {
+    let center: LocationCircleCoordinates
+    let radius: Double
+}
+
+struct LocationCircleCoordinates: Encodable {
+    let latitude: Double
+    let longitude: Double
 }

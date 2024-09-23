@@ -17,13 +17,28 @@ class RestaurantsViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     
     let restaurantServices: RestaurantServices
+    let locationServices: LocationServices
     
-    init(restaurantServices: RestaurantServices) {
+    init(restaurantServices: RestaurantServices, locationServices: LocationServices) {
         self.restaurantServices = restaurantServices
+        self.locationServices = locationServices
     }
     
     @MainActor
-    func fetchRestaurants() async {
+    func fetchNearbyRestaurants() async {
+        locationServices.checkLocationAuthorization()
+        do {
+            let location = try locationServices.fetchCurrentLocation()
+            
+            let restaurants = try await restaurantServices.fetchNearbyRestaurants(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude, query: searchText)
+            self.restaurants = restaurants
+        } catch {
+            print(error)
+        }
+    }
+    
+    @MainActor
+    func searchRestaurants() async {
         do {
             isLoading = true
             self.restaurants = try await restaurantServices.searchRestaurants(with: searchText)

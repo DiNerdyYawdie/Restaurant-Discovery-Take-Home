@@ -25,7 +25,7 @@ struct RestaurantsView: View {
                     .submitLabel(.search)
                     .onSubmit {
                         Task {
-                            await viewModel.fetchRestaurants()
+                            await viewModel.fetchNearbyRestaurants()
                         }
                     }
             }
@@ -63,7 +63,7 @@ struct RestaurantsView: View {
             
         }
         .task {
-            await viewModel.fetchRestaurants()
+            await viewModel.fetchNearbyRestaurants()
         }
         .overlay {
             if viewModel.isLoading {
@@ -74,5 +74,5 @@ struct RestaurantsView: View {
 }
 
 #Preview {
-    RestaurantsView(viewModel: RestaurantsViewModel(restaurantServices: RestaurantServicesImpl()))
+    RestaurantsView(viewModel: RestaurantsViewModel(restaurantServices: RestaurantServicesImpl(), locationServices: LocationServicesImpl()))
 }

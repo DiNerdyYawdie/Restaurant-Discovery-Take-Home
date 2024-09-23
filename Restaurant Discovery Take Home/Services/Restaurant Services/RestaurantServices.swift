@@ -9,7 +9,7 @@ import Foundation
 
 protocol RestaurantServices {
     func searchRestaurants(with query: String) async throws -> [Restaurant]
-    func fetchNearbyRestaurants() async throws -> [Restaurant]
+    func fetchNearbyRestaurants(latitude: Double, longitude: Double, query: String) async throws -> [Restaurant]
 }
 
 enum RestaurantServicesError: Error {
@@ -67,7 +67,42 @@ class RestaurantServicesImpl: RestaurantServices {
         }
     }
     
-    func fetchNearbyRestaurants() async throws -> [Restaurant] {
-        return []
+    func fetchNearbyRestaurants(latitude: Double, longitude: Double, query: String) async throws -> [Restaurant] {
+        guard let url = URL(string: Endpoints.restaurantsNearby(latitude: latitude, longitude: longitude).endpoint) else {
+            throw RestaurantServicesError.urlError
+        }
+        
+        // Create request
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        
+        // Add headers
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue(apiKey, forHTTPHeaderField: "X-Goog-Api-Key")
+        request.addValue("*", forHTTPHeaderField: "X-Goog-FieldMask")
+        
+        // Create the JSON body
+        let requestBody = NearbyRequest(locationRestriction: LocationRestriction(circle: LocationCircle(center: LocationCircleCoordinates(latitude: latitude, longitude: longitude), radius: 500.0)))
+                request.httpBody = try JSONEncoder().encode(requestBody)
+        
+        do {
+            let (data, response) = try await session.data(for: request)
+            
+            guard let httpResponse = response as? HTTPURLResponse,
+                  httpResponse.statusCode == 200 else {
+                throw RestaurantServicesError.httpError
+            }
+            
+            let restaurantResponse = try JSONDecoder().decode(RestaurantResponse.self, from: data)
+            return restaurantResponse.places
+        } catch let decodingError as DecodingError {
+            print(decodingError)
+            throw RestaurantServicesError.decodeError
+        } catch is URLError {
+            throw RestaurantServicesError.urlError
+        } catch {
+            throw RestaurantServicesError.unknown
+        }
     }
 }
+

@@ -6,8 +6,19 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		6E8CCB7F2CA0B2E7000CD6AD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6E8CCB302C9DC22C000CD6AD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6E8CCB372C9DC22C000CD6AD;
+			remoteInfo = "Restaurant Discovery Take Home";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		6E8CCB382C9DC22C000CD6AD /* Restaurant Discovery Take Home.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Restaurant Discovery Take Home.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6E8CCB7B2CA0B2E7000CD6AD /* Restaurant Discovery Take HomeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Restaurant Discovery Take HomeTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -16,10 +27,22 @@
 			path = "Restaurant Discovery Take Home";
 			sourceTree = "<group>";
 		};
+		6E8CCB7C2CA0B2E7000CD6AD /* Restaurant Discovery Take HomeTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Restaurant Discovery Take HomeTests";
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		6E8CCB352C9DC22C000CD6AD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6E8CCB782CA0B2E7000CD6AD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -33,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				6E8CCB3A2C9DC22C000CD6AD /* Restaurant Discovery Take Home */,
+				6E8CCB7C2CA0B2E7000CD6AD /* Restaurant Discovery Take HomeTests */,
 				6E8CCB392C9DC22C000CD6AD /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				6E8CCB382C9DC22C000CD6AD /* Restaurant Discovery Take Home.app */,
+				6E8CCB7B2CA0B2E7000CD6AD /* Restaurant Discovery Take HomeTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -70,6 +95,29 @@
 			productReference = 6E8CCB382C9DC22C000CD6AD /* Restaurant Discovery Take Home.app */;
 			productType = "com.apple.product-type.application";
 		};
+		6E8CCB7A2CA0B2E7000CD6AD /* Restaurant Discovery Take HomeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6E8CCB812CA0B2E7000CD6AD /* Build configuration list for PBXNativeTarget "Restaurant Discovery Take HomeTests" */;
+			buildPhases = (
+				6E8CCB772CA0B2E7000CD6AD /* Sources */,
+				6E8CCB782CA0B2E7000CD6AD /* Frameworks */,
+				6E8CCB792CA0B2E7000CD6AD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6E8CCB802CA0B2E7000CD6AD /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				6E8CCB7C2CA0B2E7000CD6AD /* Restaurant Discovery Take HomeTests */,
+			);
+			name = "Restaurant Discovery Take HomeTests";
+			packageProductDependencies = (
+			);
+			productName = "Restaurant Discovery Take HomeTests";
+			productReference = 6E8CCB7B2CA0B2E7000CD6AD /* Restaurant Discovery Take HomeTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -82,6 +130,10 @@
 				TargetAttributes = {
 					6E8CCB372C9DC22C000CD6AD = {
 						CreatedOnToolsVersion = 16.0;
+					};
+					6E8CCB7A2CA0B2E7000CD6AD = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = 6E8CCB372C9DC22C000CD6AD;
 					};
 				};
 			};
@@ -100,12 +152,20 @@
 			projectRoot = "";
 			targets = (
 				6E8CCB372C9DC22C000CD6AD /* Restaurant Discovery Take Home */,
+				6E8CCB7A2CA0B2E7000CD6AD /* Restaurant Discovery Take HomeTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		6E8CCB362C9DC22C000CD6AD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6E8CCB792CA0B2E7000CD6AD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -122,7 +182,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6E8CCB772CA0B2E7000CD6AD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6E8CCB802CA0B2E7000CD6AD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6E8CCB372C9DC22C000CD6AD /* Restaurant Discovery Take Home */;
+			targetProxy = 6E8CCB7F2CA0B2E7000CD6AD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		6E8CCB442C9DC22D000CD6AD /* Debug */ = {
@@ -255,6 +330,8 @@
 				DEVELOPMENT_TEAM = DN8DWXSMN8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "We use your location to find restaurants nearby";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We use your location to find restaurants nearby";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -284,6 +361,8 @@
 				DEVELOPMENT_TEAM = DN8DWXSMN8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "We use your location to find restaurants nearby";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We use your location to find restaurants nearby";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -299,6 +378,52 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		6E8CCB822CA0B2E7000CD6AD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DN8DWXSMN8;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.chad.Restaurant-Discovery-Take-HomeTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Restaurant Discovery Take Home.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Restaurant Discovery Take Home";
+				XROS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		6E8CCB832CA0B2E7000CD6AD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DN8DWXSMN8;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.chad.Restaurant-Discovery-Take-HomeTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Restaurant Discovery Take Home.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Restaurant Discovery Take Home";
+				XROS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;
 		};
@@ -319,6 +444,15 @@
 			buildConfigurations = (
 				6E8CCB472C9DC22D000CD6AD /* Debug */,
 				6E8CCB482C9DC22D000CD6AD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6E8CCB812CA0B2E7000CD6AD /* Build configuration list for PBXNativeTarget "Restaurant Discovery Take HomeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6E8CCB822CA0B2E7000CD6AD /* Debug */,
+				6E8CCB832CA0B2E7000CD6AD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
