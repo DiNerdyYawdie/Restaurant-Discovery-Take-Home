@@ -34,7 +34,7 @@ struct RestaurantCardView: View {
                     
                     Text(String(restaurant.rating ?? 0))
                     Text("•")
-                    Text("(reviews)")
+                    Text("(\(restaurant.userRatingCount ?? 0))")
                         .foregroundColor(.gray)
                 }
                 .font(.subheadline)
@@ -64,7 +64,7 @@ struct RestaurantCardView: View {
 
 
 #Preview {
-    RestaurantCardView(restaurant: Restaurant(id: UUID().uuidString, types: ["Jamaican"], formattedAddress: "1 Hayes Lane", rating: 4.0, displayName: RestaurantDisplayName(text: "Jahmske"), photos: [RestaurantPhotos(name: "", widthPx: 1, heightPx: 1)])) { _ in
+    RestaurantCardView(restaurant: Restaurant(id: UUID().uuidString, types: ["Jamaican"], formattedAddress: "1 Hayes Lane", rating: 4.0, userRatingCount: 100, displayName: RestaurantDisplayName(text: "Jahmske"), photos: [RestaurantPhotos(name: "", widthPx: 1, heightPx: 1)], location: RestaurantLocation(latitude: 0, longitude: 0))) { _ in
         
     }
 }

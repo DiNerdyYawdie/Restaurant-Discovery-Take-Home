@@ -4,12 +4,12 @@
 //
 //  Created by Chad-Michael Muirhead on 9/20/24.
 //
-
+import MapKit
 import SwiftUI
 
 struct RestaurantsView: View {
     
-    @ObservedObject var viewModel: RestaurantsViewModel
+    @StateObject var viewModel: RestaurantsViewModel
     
     var body: some View {
         VStack {
@@ -35,10 +35,23 @@ struct RestaurantsView: View {
             .shadow(radius: 1)
             .padding(.horizontal)
             .padding(.bottom, 15)
-            ZStack(alignment: .centerLastTextBaseline) {
+            
                 
                 if viewModel.showMapView {
-                    Text("Map")
+                    
+                    Map(coordinateRegion: $viewModel.mapCoordinateRegion, showsUserLocation: true, annotationItems: viewModel.restaurants) { restaurant in
+                        
+                        MapAnnotation(coordinate: .init(latitude: restaurant.location.latitude, longitude: restaurant.location.longitude)) {
+                            
+                            Image(viewModel.selectedRestaurant == restaurant ? .pinSelected : .pinResting)
+                                .resizable()
+                                .frame(width: 26, height: 33)
+                                .onTapGesture {
+                                    viewModel.selectedRestaurant = restaurant
+                                }
+                        }
+                    }
+                    
                 } else {
                     List(viewModel.restaurants) { restaurant in
                         
@@ -51,25 +64,24 @@ struct RestaurantsView: View {
                     .listStyle(.plain)
                     .background(Color(.systemGray6))
                 }
-                
-                Button {
-                    viewModel.showMapView.toggle()
-                } label: {
-                    Label(LocalizedStringKey("Map"), image: .map)
-                }
-                .buttonStyle(.borderedProminent)
-                .tint(.green)
-            }
-            
+
         }
         .task {
             await viewModel.fetchNearbyRestaurants()
         }
-        .overlay {
-            if viewModel.isLoading {
-                ProgressView()
+        .overlay(alignment: .centerLastTextBaseline, content: {
+            Button {
+                viewModel.showMapView.toggle()
+            } label: {
+                Label(LocalizedStringKey(viewModel.showMapView ? "List" : "Map"), image: viewModel.showMapView ? .list : .map)
             }
-        }
+            .tint(.green)
+            .buttonStyle(.borderedProminent)
+            .buttonBorderShape(.capsule)
+            .controlSize(.extraLarge)
+            .frame(height: 48)
+            .padding(.bottom, 24)
+        })
     }
 }
 

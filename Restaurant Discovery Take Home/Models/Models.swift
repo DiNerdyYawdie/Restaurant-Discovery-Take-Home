@@ -11,14 +11,24 @@ struct RestaurantResponse: Decodable {
     let places: [Restaurant]
 }
 
-struct Restaurant: Identifiable, Decodable {
+struct Restaurant: Identifiable, Decodable, Equatable {
     let id: String
     let types: [String]
     let formattedAddress: String
     let rating: Double?
+    let userRatingCount: Int?
     let displayName: RestaurantDisplayName
     let photos: [RestaurantPhotos]?
+    let location: RestaurantLocation
     
+    static func == (lhs: Restaurant, rhs: Restaurant) -> Bool {
+        lhs.id == rhs.id
+    }
+}
+
+struct RestaurantLocation: Decodable {
+    let latitude: Double
+    let longitude: Double
 }
 
 struct RestaurantDisplayName: Decodable {
