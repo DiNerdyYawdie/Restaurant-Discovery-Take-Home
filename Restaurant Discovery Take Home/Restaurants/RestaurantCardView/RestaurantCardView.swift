@@ -9,22 +9,28 @@ import SwiftUI
 
 struct RestaurantCardView: View {
     
-    @Binding var isFavorite: Bool
-    let restaurant: Restaurant
-    let onFavoriteSelected: (Restaurant) -> Void
+    @ObservedObject var viewModel: RestaurantCardViewModel
     
     var body: some View {
         HStack(alignment: .top, spacing: 16) {
             
-            // Image placeholder
-            Image(.placeholder)
-                .resizable()
-                .frame(width: 64, height: 72)
-                .aspectRatio(contentMode: .fill)
+            AsyncImage(url: viewModel.createRestaurantPhotoURL()) { image in
+                image
+                    .resizable()
+                    .frame(width: 64, height: 72)
+                    .aspectRatio(contentMode: .fill)
+                
+            } placeholder: {
+                // Image placeholder
+                Image(.placeholder)
+                    .resizable()
+                    .frame(width: 64, height: 72)
+                    .aspectRatio(contentMode: .fill)
+            }
             
             VStack(alignment: .leading, spacing: 8) {
                 // Placeholder for restaurant name
-                Text(restaurant.displayName.text)
+                Text(viewModel.restaurant.displayName.text)
                     .font(.callout)
                     .fontWeight(.bold)
                     .lineLimit(2)
@@ -36,16 +42,16 @@ struct RestaurantCardView: View {
                         .resizable()
                         .frame(width: 16, height: 16)
                     
-                    Text(String(restaurant.rating ?? 0))
+                    Text(String(viewModel.restaurant.rating ?? 0))
                         
                     Text("•")
                     
-                    Text("(\(restaurant.userRatingCount ?? 0))")
+                    Text("(\(viewModel.restaurant.userRatingCount ?? 0))")
                         .foregroundColor(.gray)
                 }
                 .font(.footnote)
                 
-                if let supportText = restaurant.generativeSummary?.overview?.text {
+                if let supportText = viewModel.restaurant.generativeSummary?.overview?.text {
                     // Supporting text placeholder
                     Text(supportText)
                         .font(.footnote)
@@ -56,15 +62,13 @@ struct RestaurantCardView: View {
             }
             
             Spacer()
-            
-            // Bookmark icon placeholder
-            Button(action: {
-                onFavoriteSelected(restaurant)
-            }) {
-                Image(isFavorite ? .bookmarkSaved : .bookmarkResting)
-                    .foregroundColor(.green)
-                    .frame(width: 24, height: 24)
-            }
+
+            Image(viewModel.isFavorite ? .bookmarkSaved : .bookmarkResting)
+                .foregroundColor(.green)
+                .frame(width: 24, height: 24)
+                .onTapGesture {
+                    viewModel.onFavoriteSelected(viewModel.restaurant)
+                }
         }
         .padding(16)
         .background(Color.white)

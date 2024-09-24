@@ -7,15 +7,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "130D24D0-1C1E-4A4B-B1B8-BA72173D713F"
+            uuid = "CB649359-34D1-4B2F-8E35-6E4421E64EA7"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Restaurant Discovery Take Home/Restaurants/RestaurantsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "53"
-            endingLineNumber = "53"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -23,16 +23,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "D95567C8-8509-4D60-90B0-CA9C914832E3"
+            uuid = "F194355E-81A2-473C-B719-1CF0F5091CBD"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Restaurant Discovery Take Home/Services/Location Services/LocationServices.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "79"
+            endingLineNumber = "79"
+            landmarkName = "locationManager(_:didChangeAuthorization:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "48BB2F59-7842-4FB3-AD05-DE00DF1CBDA1"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Restaurant Discovery Take Home/Restaurants/RestaurantsViewModel.swift"
+            filePath = "Restaurant Discovery Take Home/Restaurants/RestaurantCardView/RestaurantCardViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
-            landmarkName = "fetchNearbyRestaurants()"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
+            landmarkName = "createRestaurantPhotoURL()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

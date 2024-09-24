@@ -26,7 +26,7 @@ struct RestaurantsView: View {
                     .submitLabel(.search)
                     .onSubmit {
                         Task {
-                            await viewModel.fetchNearbyRestaurants()
+                            await viewModel.searchRestaurants()
                         }
                     }
             }
@@ -41,7 +41,7 @@ struct RestaurantsView: View {
             if viewModel.showMapView {
                 
                 Map(coordinateRegion: $viewModel.mapCoordinateRegion,
-                    showsUserLocation: true,
+                    showsUserLocation: false,
                     annotationItems: viewModel.restaurants) { restaurant in
                     
                     MapAnnotation(coordinate: .init(latitude: restaurant.location.latitude,
@@ -66,9 +66,11 @@ struct RestaurantsView: View {
                         .overlay(alignment: .bottom) {
                             if viewModel.selectedRestaurant == restaurant {
                                 withAnimation {
-                                    RestaurantCardView(isFavorite: .constant(viewModel.checkIfFavorite(restaurant: restaurant)), restaurant: restaurant) { restaurant in
-                                        viewModel.updateFavorite(restaurant: restaurant)
-                                    }
+                                    RestaurantCardView(viewModel: RestaurantCardViewModel(restaurant: restaurant,
+                                                                                          isFavorite: viewModel.checkIfFavorite(restaurant: restaurant),
+                                                                                          onFavoriteSelected: { favoritedRestaurant in
+                                        viewModel.updateFavorite(restaurant: favoritedRestaurant)
+                                    }))
                                     .frame(width: UIScreen.main.bounds.width - 30)
                                     .offset(y: -50)
                                 }
@@ -82,9 +84,11 @@ struct RestaurantsView: View {
             } else {
                 List(viewModel.restaurants) { restaurant in
                     
-                    RestaurantCardView(isFavorite: .constant(viewModel.checkIfFavorite(restaurant: restaurant)), restaurant: restaurant) { restaurant in
-                        viewModel.updateFavorite(restaurant: restaurant)
-                    }
+                    RestaurantCardView(viewModel: RestaurantCardViewModel(restaurant: restaurant,
+                                                                          isFavorite: viewModel.checkIfFavorite(restaurant: restaurant),
+                                                                          onFavoriteSelected: { favoritedRestaurant in
+                        viewModel.updateFavorite(restaurant: favoritedRestaurant)
+                    }))
                     .listRowBackground(Color.clear)
                     .listRowSeparator(.hidden)
                     
@@ -95,7 +99,7 @@ struct RestaurantsView: View {
             
         }
         .task {
-            await viewModel.fetchNearbyRestaurants()
+            await viewModel.checkLocationAuthorization()
         }
         .overlay(alignment: .centerLastTextBaseline, content: {
             Button {
@@ -112,6 +116,11 @@ struct RestaurantsView: View {
             .frame(width: 117, height: 48)
             .padding(.bottom, 24)
         })
+        .alert(isPresented: $viewModel.showPermissionsAlert) {
+            Alert(title: Text(viewModel.permissionsAlertTitle), primaryButton: .default(Text("Go to Settings"), action: {
+                viewModel.openSettingsToEnableLocationServices()
+            }), secondaryButton: .cancel())
+        }
     }
 }
 

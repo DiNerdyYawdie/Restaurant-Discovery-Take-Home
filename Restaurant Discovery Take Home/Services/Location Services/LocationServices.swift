@@ -6,9 +6,12 @@
 //
 import CoreLocation
 import Foundation
+import Combine
 
 protocol LocationServices {
-    func checkLocationAuthorization()
+    var locationAuthorizationStatusPublisher: PassthroughSubject<Void, Never> { get }
+    func checkLocationAuthorization() -> LocationAuthorizationStatus
+    func requestWhenInUseAuthorization()
     func fetchCurrentLocation() throws -> CLLocation
 }
 
@@ -19,6 +22,7 @@ enum LocationServicesError: Error {
 
 class LocationServicesImpl: NSObject, LocationServices {
     
+    var locationAuthorizationStatusPublisher = PassthroughSubject<Void, Never>()
     var locationManager: CLLocationManager
     
     init(locationManager: CLLocationManager = CLLocationManager()) {
@@ -29,22 +33,23 @@ class LocationServicesImpl: NSObject, LocationServices {
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
     
-    func checkLocationAuthorization() {
+    func checkLocationAuthorization() -> LocationAuthorizationStatus {
+        
         switch locationManager.authorizationStatus {
         case .notDetermined:
-            
-            locationManager.requestWhenInUseAuthorization()
-        case .restricted:
-            print("restricted")
-        case .denied:
-            print("denied")
-        case .authorizedAlways:
-            print("authorized Always")
-        case .authorizedWhenInUse:
-            print("authorized wen in use")
+            return LocationAuthorizationStatus.notDetermined
+        case .restricted, .denied:
+            return LocationAuthorizationStatus.denied
+        case .authorizedAlways, .authorizedWhenInUse:
+            return LocationAuthorizationStatus.authorized
         @unknown default:
             print("default")
+            return LocationAuthorizationStatus.denied
         }
+    }
+    
+    func requestWhenInUseAuthorization() {
+        locationManager.requestWhenInUseAuthorization()
     }
     
     func fetchCurrentLocation() throws -> CLLocation {
@@ -68,5 +73,9 @@ extension LocationServicesImpl: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: any Error) {
         print(error)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        locationAuthorizationStatusPublisher.send(())
     }
 }

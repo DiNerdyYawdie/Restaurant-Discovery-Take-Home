@@ -6,6 +6,7 @@
 //
 import Foundation
 import _MapKit_SwiftUI
+import Combine
 
 @MainActor
 class RestaurantsViewModel: ObservableObject {
@@ -20,46 +21,99 @@ class RestaurantsViewModel: ObservableObject {
     
     @Published var showMapView: Bool = false
     
+    @Published var permissionsAlertTitle: String = "Turn on location services in settings"
+    @Published var showPermissionsAlert: Bool = false
+    
     @Published var isLoading: Bool = false
     let userDefaults: UserDefaults
     
     let restaurantServices: RestaurantServices
     let locationServices: LocationServices
     
+    var cancellables: Set<AnyCancellable> = []
+    
     init(restaurantServices: RestaurantServices, locationServices: LocationServices, userDefaults: UserDefaults = .standard) {
         self.restaurantServices = restaurantServices
         self.locationServices = locationServices
         self.userDefaults = userDefaults
+        
+        listenForLocationAuthorizationChanges()
     }
     
-    @MainActor
+    // Check if there was any change to the user location authorization permissions
+    func checkLocationAuthorization() async {
+        let locationAuthorizationStatus = locationServices.checkLocationAuthorization()
+        
+        switch locationAuthorizationStatus {
+        case .authorized:
+            await fetchNearbyRestaurants()
+        case .denied:
+            showPermissionsAlert.toggle()
+        case .notDetermined:
+            locationServices.requestWhenInUseAuthorization()
+        }
+    }
+    
+    // Listen for any changes to users location permissions
+    /// Using Delegate function `didChangeAuthorization` from `CoreLocation`
+    func listenForLocationAuthorizationChanges() {
+        locationServices.locationAuthorizationStatusPublisher
+            .receive(on: RunLoop.main)
+            .dropFirst()
+            .sink { [weak self] in
+                Task {
+                    await self?.checkLocationAuthorization()
+                }
+            }
+            .store(in: &cancellables)
+    }
+    
+    /// Find restaurants based on user location
     func fetchNearbyRestaurants() async {
-        locationServices.checkLocationAuthorization()
         do {
             self.userLocation = try locationServices.fetchCurrentLocation()
             guard let userLocation = self.userLocation else { return }
             
-            self.mapCoordinateRegion = .init(center: userLocation.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
+            self.mapCoordinateRegion = .init(center: userLocation.coordinate,
+                                             latitudinalMeters: 1000,
+                                             longitudinalMeters: 1000)
             
             let restaurants = try await restaurantServices.fetchNearbyRestaurants(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude, query: searchText)
             self.restaurants = restaurants
-            dump(restaurants)
         } catch {
             print(error)
         }
     }
     
+    // Search for restaurants based on user search term in Textfield
     @MainActor
     func searchRestaurants() async {
         do {
             isLoading = true
             self.restaurants = try await restaurantServices.searchRestaurants(with: searchText)
+            if let restaurantLocation = restaurants.first?.location {
+                self.mapCoordinateRegion = .init(center: .init(latitude: restaurantLocation.latitude, longitude: restaurantLocation.longitude),
+                                                 latitudinalMeters: 10000,
+                                                 longitudinalMeters: 10000)
+            }
+            
             isLoading = false
         } catch {
             isLoading = false
             print(error)
         }
     }
+    
+    // Navigate to Settings to toggle location persmissions
+    func openSettingsToEnableLocationServices() {
+        guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else { return }
+        UIApplication.shared.open(settingsURL)
+    }
+}
+
+// MARK: Favoriting a Restaurant
+// Saved locally using UserDefaults
+extension RestaurantsViewModel {
     
     func updateFavorite(restaurant: Restaurant) {
         // Get previously Favorited restaurants from `userDefaults`
