@@ -8,7 +8,7 @@
 import Foundation
 
 enum Endpoints {
-    case restaurantsNearby(latitude: Double, longitude: Double)
+    case restaurantsNearby
     case restaurantsSearch
     
     // Base URL for the Places API
@@ -19,7 +19,7 @@ enum Endpoints {
     var endpoint: String {
         switch self {
         
-        case .restaurantsNearby(latitude: let latitude, longitude: let longitude):
+        case .restaurantsNearby:
             // TODO: Update endpoint
             return "\(baseURL)/places:searchNearby"
         case .restaurantsSearch:

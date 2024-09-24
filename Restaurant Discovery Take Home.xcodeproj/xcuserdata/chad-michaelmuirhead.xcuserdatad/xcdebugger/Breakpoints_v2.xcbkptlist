@@ -7,22 +7,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "263CF433-7F8F-4230-82C5-99C2806D0FB5"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Restaurant Discovery Take Home/Restaurants/RestaurantsViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "40"
-            endingLineNumber = "40"
-            landmarkName = "fetchNearbyRestaurants()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "130D24D0-1C1E-4A4B-B1B8-BA72173D713F"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -30,8 +14,8 @@
             filePath = "Restaurant Discovery Take Home/Restaurants/RestaurantsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "50"
-            endingLineNumber = "50"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -39,17 +23,17 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "49668BFA-B451-4BFB-8909-2E5587F23DA5"
+            uuid = "D95567C8-8509-4D60-90B0-CA9C914832E3"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Restaurant Discovery Take Home/Restaurants/RestaurantsView.swift"
+            filePath = "Restaurant Discovery Take Home/Restaurants/RestaurantsViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "81"
-            endingLineNumber = "81"
-            landmarkName = "body"
-            landmarkType = "24">
+            startingLineNumber = "46"
+            endingLineNumber = "46"
+            landmarkName = "fetchNearbyRestaurants()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

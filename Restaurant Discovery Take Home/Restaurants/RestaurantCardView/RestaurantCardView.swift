@@ -9,6 +9,7 @@ import SwiftUI
 
 struct RestaurantCardView: View {
     
+    @Binding var isFavorite: Bool
     let restaurant: Restaurant
     let onFavoriteSelected: (Restaurant) -> Void
     
@@ -60,7 +61,7 @@ struct RestaurantCardView: View {
             Button(action: {
                 onFavoriteSelected(restaurant)
             }) {
-                Image(.bookmarkResting)
+                Image(isFavorite ? .bookmarkSaved : .bookmarkResting)
                     .foregroundColor(.green)
                     .frame(width: 24, height: 24)
             }
@@ -72,9 +73,9 @@ struct RestaurantCardView: View {
     }
 }
 
-
-#Preview {
-    RestaurantCardView(restaurant: Restaurant(id: UUID().uuidString, types: ["Jamaican"], formattedAddress: "1 Hayes Lane", rating: 4.0, userRatingCount: 100, displayName: RestaurantLocalizedText(text: "Jahmske"), photos: [RestaurantPhotos(name: "", widthPx: 1, heightPx: 1)], location: RestaurantLocation(latitude: 0, longitude: 0), generativeSummary: nil)) { _ in
-        
-    }
-}
+//
+//#Preview {
+//    RestaurantCardView(isFavorite: .init(wrappedValue: false), restaurant: Restaurant(id: UUID().uuidString, types: ["Jamaican"], formattedAddress: "1 Hayes Lane", rating: 4.0, userRatingCount: 100, displayName: RestaurantLocalizedText(text: "Jahmske"), photos: [RestaurantPhotos(name: "", widthPx: 1, heightPx: 1)], location: RestaurantLocation(latitude: 0, longitude: 0), generativeSummary: nil)) { _ in
+//        
+//    }
+//}

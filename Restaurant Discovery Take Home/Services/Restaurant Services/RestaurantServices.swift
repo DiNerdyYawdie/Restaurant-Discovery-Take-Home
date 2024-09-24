@@ -68,7 +68,7 @@ class RestaurantServicesImpl: RestaurantServices {
     }
     
     func fetchNearbyRestaurants(latitude: Double, longitude: Double, query: String) async throws -> [Restaurant] {
-        guard let url = URL(string: Endpoints.restaurantsNearby(latitude: latitude, longitude: longitude).endpoint) else {
+        guard let url = URL(string: Endpoints.restaurantsNearby.endpoint) else {
             throw RestaurantServicesError.urlError
         }
         

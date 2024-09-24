@@ -40,63 +40,60 @@ struct RestaurantsView: View {
             
             if viewModel.showMapView {
                 
-                Map(coordinateRegion: $viewModel.mapCoordinateRegion, showsUserLocation: true, annotationItems: viewModel.restaurants) { restaurant in
+                Map(coordinateRegion: $viewModel.mapCoordinateRegion,
+                    showsUserLocation: true,
+                    annotationItems: viewModel.restaurants) { restaurant in
                     
-                    MapAnnotation(coordinate: .init(latitude: restaurant.location.latitude, longitude: restaurant.location.longitude)) {
+                    MapAnnotation(coordinate: .init(latitude: restaurant.location.latitude,
+                                                    longitude: restaurant.location.longitude)) {
                         
-                            VStack {
+                        VStack {
                             
-                                Button {
-                                    viewModel.selectedRestaurant = restaurant
-                                    
-                                    withAnimation {
-                                        viewModel.mapCoordinateRegion.center = .init(latitude: restaurant.location.latitude, longitude: restaurant.location.longitude)
-                                    }
-                                } label: {
-                                    Image(viewModel.selectedRestaurant == restaurant ? .pinSelected : .pinResting)
-                                        .resizable()
-                                        .frame(width: 26, height: 33)
+                            Button {
+                                viewModel.selectedRestaurant = restaurant
+                                
+                                withAnimation {
+                                    viewModel.mapCoordinateRegion.center = .init(latitude: restaurant.location.latitude, longitude: restaurant.location.longitude)
                                 }
-                                .buttonStyle(.plain)
-
-                            
-                               
-                        }
-                            .overlay(alignment: .bottom) {
-                                                                if viewModel.selectedRestaurant == restaurant {
-                                                                    withAnimation {
-                                                                        RestaurantCardView(restaurant: restaurant) { _ in
-                                
-                                                                        }
-                                                                        .frame(width: UIScreen.main.bounds.width - 30)
-                                                                        .offset(y: -50)
-                                                                    }
-                                
-                                
-                                                                }
+                            } label: {
+                                Image(viewModel.selectedRestaurant == restaurant ? .pinSelected : .pinResting)
+                                    .resizable()
+                                    .frame(width: 26, height: 33)
                             }
+                            .buttonStyle(.plain)
+                            
+                        }
+                        .overlay(alignment: .bottom) {
+                            if viewModel.selectedRestaurant == restaurant {
+                                withAnimation {
+                                    RestaurantCardView(isFavorite: .constant(viewModel.checkIfFavorite(restaurant: restaurant)), restaurant: restaurant) { restaurant in
+                                        viewModel.updateFavorite(restaurant: restaurant)
+                                    }
+                                    .frame(width: UIScreen.main.bounds.width - 30)
+                                    .offset(y: -50)
+                                }
+                                
+                            }
+                        }
                     }
                 }
-//                .onTapGesture {
-//                    viewModel.selectedRestaurant = nil
-//                }
-            
-            
-        } else {
-            List(viewModel.restaurants) { restaurant in
                 
-                RestaurantCardView(restaurant: restaurant) { restaurant in
+                
+            } else {
+                List(viewModel.restaurants) { restaurant in
+                    
+                    RestaurantCardView(isFavorite: .constant(viewModel.checkIfFavorite(restaurant: restaurant)), restaurant: restaurant) { restaurant in
+                        viewModel.updateFavorite(restaurant: restaurant)
+                    }
+                    .listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
                     
                 }
-                .listRowBackground(Color.clear)
-                .listRowSeparator(.hidden)
-                
+                .listStyle(.plain)
+                .background(Color("background-color"))
             }
-            .listStyle(.plain)
-            .background(Color("background-color"))
+            
         }
-        
-    }
         .task {
             await viewModel.fetchNearbyRestaurants()
         }
@@ -115,7 +112,7 @@ struct RestaurantsView: View {
             .frame(width: 117, height: 48)
             .padding(.bottom, 24)
         })
-}
+    }
 }
 
 #Preview {

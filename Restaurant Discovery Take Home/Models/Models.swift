@@ -22,6 +22,20 @@ struct Restaurant: Identifiable, Decodable, Equatable {
     let location: RestaurantLocation
     let generativeSummary: RestaurantGenerativeSummary?
     
+    var isFavorite: Bool = false
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case types
+        case formattedAddress
+        case rating
+        case userRatingCount
+        case displayName
+        case photos
+        case location
+        case generativeSummary
+    }
+    
     static func == (lhs: Restaurant, rhs: Restaurant) -> Bool {
         lhs.id == rhs.id
     }
@@ -40,7 +54,6 @@ struct RestaurantPhotos: Decodable {
     let name: String
     let widthPx: Int
     let heightPx: Int
-    
 }
 
 struct NearbyRequest: Encodable {
