@@ -22,6 +22,7 @@ struct RestaurantsView: View {
                 Image(.search)
                 
                 TextField("Search restaurants", text: $viewModel.searchText)
+                    .padding(.vertical, 6)
                     .submitLabel(.search)
                     .onSubmit {
                         Task {
@@ -30,7 +31,7 @@ struct RestaurantsView: View {
                     }
             }
             .padding(.horizontal)
-            .background(Color(.systemGray6))
+            .background(Color("background-color"))
             .cornerRadius(25)
             .shadow(radius: 1)
             .padding(.horizontal)
@@ -48,6 +49,10 @@ struct RestaurantsView: View {
                                 .frame(width: 26, height: 33)
                                 .onTapGesture {
                                     viewModel.selectedRestaurant = restaurant
+                                    
+                                    withAnimation {
+                                        viewModel.mapCoordinateRegion.center = .init(latitude: restaurant.location.latitude, longitude: restaurant.location.longitude)
+                                    }
                                 }
                         }
                     }
@@ -59,10 +64,11 @@ struct RestaurantsView: View {
                             
                         }
                         .listRowBackground(Color.clear)
+                        .listRowSeparator(.hidden)
                         
                     }
                     .listStyle(.plain)
-                    .background(Color(.systemGray6))
+                    .background(Color("background-color"))
                 }
 
         }
@@ -73,13 +79,13 @@ struct RestaurantsView: View {
             Button {
                 viewModel.showMapView.toggle()
             } label: {
-                Label(LocalizedStringKey(viewModel.showMapView ? "List" : "Map"), image: viewModel.showMapView ? .list : .map)
+                Label(LocalizedStringKey(viewModel.showMapView ? "List" : "Map"), image: viewModel.showMapView ? .whiteList : .whiteMap)
             }
-            .tint(.green)
+            .tint(Color("trails-green"))
             .buttonStyle(.borderedProminent)
             .buttonBorderShape(.capsule)
             .controlSize(.extraLarge)
-            .frame(height: 48)
+            .frame(width: 117, height: 48)
             .padding(.bottom, 24)
         })
     }
