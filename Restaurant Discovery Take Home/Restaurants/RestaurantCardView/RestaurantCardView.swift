@@ -24,7 +24,10 @@ struct RestaurantCardView: View {
             VStack(alignment: .leading, spacing: 8) {
                 // Placeholder for restaurant name
                 Text(restaurant.displayName.text)
-                    .font(.headline)
+                    .font(.callout)
+                    .fontWeight(.bold)
+                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                 
                 // Placeholder for rating and reviews
                 HStack {
@@ -33,16 +36,22 @@ struct RestaurantCardView: View {
                         .frame(width: 16, height: 16)
                     
                     Text(String(restaurant.rating ?? 0))
+                        
                     Text("•")
+                    
                     Text("(\(restaurant.userRatingCount ?? 0))")
                         .foregroundColor(.gray)
                 }
-                .font(.subheadline)
+                .font(.footnote)
                 
-                // Supporting text placeholder
-                Text("{supporting text}")
-                    .font(.footnote)
-                    .foregroundColor(.gray)
+                if let supportText = restaurant.generativeSummary?.overview?.text {
+                    // Supporting text placeholder
+                    Text(supportText)
+                        .font(.footnote)
+                        .lineLimit(1)
+                        .foregroundColor(.gray)
+                }
+                
             }
             
             Spacer()
@@ -53,18 +62,19 @@ struct RestaurantCardView: View {
             }) {
                 Image(.bookmarkResting)
                     .foregroundColor(.green)
+                    .frame(width: 24, height: 24)
             }
         }
-        .padding()
+        .padding(16)
         .background(Color.white)
-        .cornerRadius(10)
-        .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 5)
+        .cornerRadius(16)
+        .shadow(color: Color("card-shadow").opacity(0.2), radius: 5, x: 0, y: 16)
     }
 }
 
 
 #Preview {
-    RestaurantCardView(restaurant: Restaurant(id: UUID().uuidString, types: ["Jamaican"], formattedAddress: "1 Hayes Lane", rating: 4.0, userRatingCount: 100, displayName: RestaurantDisplayName(text: "Jahmske"), photos: [RestaurantPhotos(name: "", widthPx: 1, heightPx: 1)], location: RestaurantLocation(latitude: 0, longitude: 0))) { _ in
+    RestaurantCardView(restaurant: Restaurant(id: UUID().uuidString, types: ["Jamaican"], formattedAddress: "1 Hayes Lane", rating: 4.0, userRatingCount: 100, displayName: RestaurantLocalizedText(text: "Jahmske"), photos: [RestaurantPhotos(name: "", widthPx: 1, heightPx: 1)], location: RestaurantLocation(latitude: 0, longitude: 0), generativeSummary: nil)) { _ in
         
     }
 }

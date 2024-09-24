@@ -37,47 +37,74 @@ struct RestaurantsView: View {
             .padding(.horizontal)
             .padding(.bottom, 15)
             
+            
+            if viewModel.showMapView {
                 
-                if viewModel.showMapView {
+                Map(coordinateRegion: $viewModel.mapCoordinateRegion, showsUserLocation: true, annotationItems: viewModel.restaurants) { restaurant in
                     
-                    Map(coordinateRegion: $viewModel.mapCoordinateRegion, showsUserLocation: true, annotationItems: viewModel.restaurants) { restaurant in
+                    MapAnnotation(coordinate: .init(latitude: restaurant.location.latitude, longitude: restaurant.location.longitude)) {
                         
-                        MapAnnotation(coordinate: .init(latitude: restaurant.location.latitude, longitude: restaurant.location.longitude)) {
+                            VStack {
                             
-                            Image(viewModel.selectedRestaurant == restaurant ? .pinSelected : .pinResting)
-                                .resizable()
-                                .frame(width: 26, height: 33)
-                                .onTapGesture {
+                                Button {
                                     viewModel.selectedRestaurant = restaurant
                                     
                                     withAnimation {
                                         viewModel.mapCoordinateRegion.center = .init(latitude: restaurant.location.latitude, longitude: restaurant.location.longitude)
                                     }
+                                } label: {
+                                    Image(viewModel.selectedRestaurant == restaurant ? .pinSelected : .pinResting)
+                                        .resizable()
+                                        .frame(width: 26, height: 33)
                                 }
-                        }
-                    }
-                    
-                } else {
-                    List(viewModel.restaurants) { restaurant in
-                        
-                        RestaurantCardView(restaurant: restaurant) { restaurant in
-                            
-                        }
-                        .listRowBackground(Color.clear)
-                        .listRowSeparator(.hidden)
-                        
-                    }
-                    .listStyle(.plain)
-                    .background(Color("background-color"))
-                }
+                                .buttonStyle(.plain)
 
+                            
+                               
+                        }
+                            .overlay(alignment: .bottom) {
+                                                                if viewModel.selectedRestaurant == restaurant {
+                                                                    withAnimation {
+                                                                        RestaurantCardView(restaurant: restaurant) { _ in
+                                
+                                                                        }
+                                                                        .frame(width: UIScreen.main.bounds.width - 30)
+                                                                        .offset(y: -50)
+                                                                    }
+                                
+                                
+                                                                }
+                            }
+                    }
+                }
+//                .onTapGesture {
+//                    viewModel.selectedRestaurant = nil
+//                }
+            
+            
+        } else {
+            List(viewModel.restaurants) { restaurant in
+                
+                RestaurantCardView(restaurant: restaurant) { restaurant in
+                    
+                }
+                .listRowBackground(Color.clear)
+                .listRowSeparator(.hidden)
+                
+            }
+            .listStyle(.plain)
+            .background(Color("background-color"))
         }
+        
+    }
         .task {
             await viewModel.fetchNearbyRestaurants()
         }
         .overlay(alignment: .centerLastTextBaseline, content: {
             Button {
-                viewModel.showMapView.toggle()
+                DispatchQueue.main.async {
+                    viewModel.showMapView.toggle()
+                }
             } label: {
                 Label(LocalizedStringKey(viewModel.showMapView ? "List" : "Map"), image: viewModel.showMapView ? .whiteList : .whiteMap)
             }
@@ -88,7 +115,7 @@ struct RestaurantsView: View {
             .frame(width: 117, height: 48)
             .padding(.bottom, 24)
         })
-    }
+}
 }
 
 #Preview {

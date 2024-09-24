@@ -17,9 +17,10 @@ struct Restaurant: Identifiable, Decodable, Equatable {
     let formattedAddress: String
     let rating: Double?
     let userRatingCount: Int?
-    let displayName: RestaurantDisplayName
+    let displayName: RestaurantLocalizedText
     let photos: [RestaurantPhotos]?
     let location: RestaurantLocation
+    let generativeSummary: RestaurantGenerativeSummary?
     
     static func == (lhs: Restaurant, rhs: Restaurant) -> Bool {
         lhs.id == rhs.id
@@ -31,7 +32,7 @@ struct RestaurantLocation: Decodable {
     let longitude: Double
 }
 
-struct RestaurantDisplayName: Decodable {
+struct RestaurantLocalizedText: Decodable {
     let text: String
 }
 
@@ -59,3 +60,9 @@ struct LocationCircleCoordinates: Encodable {
     let latitude: Double
     let longitude: Double
 }
+
+struct RestaurantGenerativeSummary: Decodable {
+    let overview: RestaurantLocalizedText?
+    let description: RestaurantLocalizedText?
+}
+
