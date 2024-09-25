@@ -4,7 +4,7 @@
 //
 //  Created by Chad-Michael Muirhead on 9/20/24.
 //
-
+import SDWebImageSwiftUI
 import SwiftUI
 
 struct RestaurantCardView: View {
@@ -14,12 +14,11 @@ struct RestaurantCardView: View {
     var body: some View {
         HStack(alignment: .top, spacing: 16) {
             
-            AsyncImage(url: viewModel.createRestaurantPhotoURL()) { image in
+            WebImage(url: viewModel.createRestaurantPhotoURL()) { image in
                 image
                     .resizable()
                     .frame(width: 64, height: 72)
                     .aspectRatio(contentMode: .fill)
-                
             } placeholder: {
                 // Image placeholder
                 Image(.placeholder)
@@ -27,6 +26,21 @@ struct RestaurantCardView: View {
                     .frame(width: 64, height: 72)
                     .aspectRatio(contentMode: .fill)
             }
+
+            // Can be uncommented to not use 3rd party `SDWebImageSwiftUI`
+//            AsyncImage(url: viewModel.createRestaurantPhotoURL()) { image in
+//                image
+//                    .resizable()
+//                    .frame(width: 64, height: 72)
+//                    .aspectRatio(contentMode: .fill)
+//                
+//            } placeholder: {
+//                // Image placeholder
+//                Image(.placeholder)
+//                    .resizable()
+//                    .frame(width: 64, height: 72)
+//                    .aspectRatio(contentMode: .fill)
+//            }
             
             VStack(alignment: .leading, spacing: 8) {
                 // Placeholder for restaurant name

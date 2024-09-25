@@ -69,3 +69,10 @@ For the project i used the MVVM architecture to allow for separation of the busi
     
     2. Contains the API_Key
 
+## 3rd Party Library - SDWebImageSwiftUI
+
+I added `SDWebImageSwiftUI` via SPM. This allows for downloading/presenting the image in a view.
+Plus it also helps with caching to improve the expereience so less flickering on images in the view.
+
+Used inside `RestaurantCardView` using `WebImage`. 
+Note: To switch to using native`AsyncImage`, just comment out the other block of code that uses the 3rd party library
