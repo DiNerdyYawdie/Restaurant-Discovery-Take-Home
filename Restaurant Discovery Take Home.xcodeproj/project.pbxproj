@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		6E8CCBA12CA39214000CD6AD /* ReadME.md in Resources */ = {isa = PBXBuildFile; fileRef = 6E8CCBA02CA39214000CD6AD /* ReadME.md */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		6E8CCB7F2CA0B2E7000CD6AD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -19,6 +23,7 @@
 /* Begin PBXFileReference section */
 		6E8CCB382C9DC22C000CD6AD /* Restaurant Discovery Take Home.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Restaurant Discovery Take Home.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E8CCB7B2CA0B2E7000CD6AD /* Restaurant Discovery Take HomeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Restaurant Discovery Take HomeTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6E8CCBA02CA39214000CD6AD /* ReadME.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ReadME.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -55,6 +60,7 @@
 		6E8CCB2F2C9DC22C000CD6AD = {
 			isa = PBXGroup;
 			children = (
+				6E8CCBA02CA39214000CD6AD /* ReadME.md */,
 				6E8CCB3A2C9DC22C000CD6AD /* Restaurant Discovery Take Home */,
 				6E8CCB7C2CA0B2E7000CD6AD /* Restaurant Discovery Take HomeTests */,
 				6E8CCB392C9DC22C000CD6AD /* Products */,
@@ -162,6 +168,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6E8CCBA12CA39214000CD6AD /* ReadME.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
