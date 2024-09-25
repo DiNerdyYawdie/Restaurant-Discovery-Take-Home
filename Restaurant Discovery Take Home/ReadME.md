@@ -42,6 +42,7 @@ For the project i used the MVVM architecture to allow for separation of the busi
 
     1. `RestaurantsView` - shows the list/map annotations of all the restaurants provided by the API
     2. `RestaurantCardView` - view that represents each restaurant inside the List in `RestaurantsView` and also to show detail on Map, after a annotation is selected.
+    3. `RestaurantMapView` - used to show restaurants on the Map, using `MapAnnotations`. Based on the user location or the selected restaurant, the Map's center is refocused.
 
 ## API Services
 
