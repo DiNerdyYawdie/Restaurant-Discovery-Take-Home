@@ -14,7 +14,7 @@ struct RestaurantCardView: View {
     var body: some View {
         HStack(alignment: .top, spacing: 16) {
             
-            WebImage(url: viewModel.createRestaurantPhotoURL()) { image in
+            WebImage(url: viewModel.restaurant.photoURL) { image in
                 image
                     .resizable()
                     .frame(width: 64, height: 72)
@@ -43,14 +43,12 @@ struct RestaurantCardView: View {
 //            }
             
             VStack(alignment: .leading, spacing: 8) {
-                // Placeholder for restaurant name
                 Text(viewModel.restaurant.displayName.text)
                     .font(.callout)
                     .fontWeight(.bold)
                     .lineLimit(2)
                     .fixedSize(horizontal: false, vertical: true)
                 
-                // Placeholder for rating and reviews
                 HStack {
                     Image(.star)
                         .resizable()

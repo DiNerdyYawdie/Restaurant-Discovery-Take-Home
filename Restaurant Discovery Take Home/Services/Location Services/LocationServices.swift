@@ -75,6 +75,7 @@ extension LocationServicesImpl: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        // Send update that the location permissions have changed
         locationAuthorizationStatusPublisher.send(())
     }
 }

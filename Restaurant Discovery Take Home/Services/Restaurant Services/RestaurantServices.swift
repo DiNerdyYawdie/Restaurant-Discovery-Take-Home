@@ -68,7 +68,7 @@ class RestaurantServicesImpl: RestaurantServices {
             }
             
             let restaurantResponse = try JSONDecoder().decode(RestaurantResponse.self, from: data)
-            return restaurantResponse.places
+            return restaurantResponse.places ?? []
         } catch let decodingError as DecodingError {
             print(decodingError)
             throw RestaurantServicesError.decodeError
@@ -107,7 +107,7 @@ class RestaurantServicesImpl: RestaurantServices {
             }
             
             let restaurantResponse = try JSONDecoder().decode(RestaurantResponse.self, from: data)
-            return restaurantResponse.places
+            return restaurantResponse.places ?? []
         } catch let decodingError as DecodingError {
             print(decodingError)
             throw RestaurantServicesError.decodeError

@@ -12,6 +12,7 @@ struct RestaurantsView: View {
     @StateObject var viewModel: RestaurantsViewModel
     
     var body: some View {
+        ZStack(alignment: .bottom) {
         VStack {
             
             Image(.logoLockup)
@@ -46,22 +47,32 @@ struct RestaurantsView: View {
             if viewModel.showMapView {
                 RestaurantMapView(viewModel: viewModel)
             } else {
-                List(viewModel.restaurants) { restaurant in
+                if !viewModel.restaurants.isEmpty {
+                    List(viewModel.restaurants) { restaurant in
+                        
+                        RestaurantCardView(viewModel: RestaurantCardViewModel(restaurant: restaurant,
+                                                                              isFavorite: viewModel.checkIfFavorite(restaurant: restaurant),
+                                                                              onFavoriteSelected: { favoritedRestaurant in
+                            viewModel.updateFavorite(restaurant: favoritedRestaurant)
+                        }))
+                        .onTapGesture {
+                            viewModel.selectedRestaurantOnList = restaurant
+                            viewModel.showDetailView.toggle()
+                        }
+                        .listRowBackground(Color.clear)
+                        .listRowSeparator(.hidden)
+                        
+                    }
+                    .listStyle(.plain)
+                    .background(Color("background-color"))
+                    .alert(isPresented: $viewModel.showErrorAlert) {
+                        Alert(title: Text(viewModel.errorAlertTitle))
+                    }
+                } else {
                     
-                    RestaurantCardView(viewModel: RestaurantCardViewModel(restaurant: restaurant,
-                                                                          isFavorite: viewModel.checkIfFavorite(restaurant: restaurant),
-                                                                          onFavoriteSelected: { favoritedRestaurant in
-                        viewModel.updateFavorite(restaurant: favoritedRestaurant)
-                    }))
-                    .listRowBackground(Color.clear)
-                    .listRowSeparator(.hidden)
-                    
+                    ContentUnavailableView(LocalizedStringKey(.noRestaurantsFoundTitle), systemImage: "magnifyingglass", description: Text(verbatim: .noRestaurantsFoundSubtitle))
                 }
-                .listStyle(.plain)
-                .background(Color("background-color"))
-                .alert(isPresented: $viewModel.showErrorAlert) {
-                    Alert(title: Text(viewModel.errorAlertTitle))
-                }
+                
             }
             
         }
@@ -74,7 +85,14 @@ struct RestaurantsView: View {
                     .tint(Color(.trailsGreen))
             }
         })
-        .overlay(alignment: .centerLastTextBaseline, content: {
+        .sheet(isPresented: $viewModel.showDetailView) {
+            if let selectedRestaurantOnList = viewModel.selectedRestaurantOnList {
+                RestaurantDetailView(restaurant: selectedRestaurantOnList,
+                                     isPresented: $viewModel.showDetailView)
+            }
+            
+        }
+            
             Button {
                 DispatchQueue.main.async {
                     viewModel.showMapView.toggle()
@@ -88,8 +106,7 @@ struct RestaurantsView: View {
             .controlSize(.extraLarge)
             .frame(width: 117, height: 48)
             .padding(.bottom, 24)
-        })
-        
+    }
     }
 }
 

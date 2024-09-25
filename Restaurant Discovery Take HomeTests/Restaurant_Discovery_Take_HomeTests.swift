@@ -32,7 +32,7 @@ final class Restaurant_Discovery_Take_HomeTests: XCTestCase {
     func testFetchNearbyRestaurantsSuccessful() async throws {
         // Given
         
-        let mockRestaurant = Restaurant(id: "1234", formattedAddress: "1 Highway Ave", rating: 4, userRatingCount: 4, displayName: RestaurantLocalizedText(text: "Ms Lilys"), photos: [], location: RestaurantLocation(latitude: 0, longitude: 0), generativeSummary: nil)
+        let mockRestaurant = Restaurant(id: "1234", formattedAddress: "1 Highway Ave", rating: 4, userRatingCount: 4, displayName: RestaurantLocalizedText(text: "Ms Lilys"), photos: [], location: RestaurantLocation(latitude: 0, longitude: 0), generativeSummary: nil, regularOpeningHours: RegularOpeningHours(openNow: true, weekdayDescriptions: ["Monday 8am - 8pm"]), nationalPhoneNumber: "876123456789")
         
         mockRestaurantService.nearbyRestaurantsResult = .success([mockRestaurant])
         mockLocationService.userLocationResult = .success(RestaurantLocation(latitude: 0, longitude: 0))
@@ -146,7 +146,7 @@ final class Restaurant_Discovery_Take_HomeTests: XCTestCase {
     @MainActor
     func testSearchRestaurants_Success() async {
         // Arrange
-        let mockRestaurant = Restaurant(id: "1234", formattedAddress: "86 March Lane", rating: 3, userRatingCount: 4, displayName: RestaurantLocalizedText(text: "Fish N Tingz"), photos: [], location: RestaurantLocation(latitude: 37.7749, longitude: -18.948), generativeSummary: nil)
+        let mockRestaurant = Restaurant(id: "1234", formattedAddress: "86 March Lane", rating: 3, userRatingCount: 4, displayName: RestaurantLocalizedText(text: "Fish N Tingz"), photos: [], location: RestaurantLocation(latitude: 37.7749, longitude: -18.948), generativeSummary: nil, regularOpeningHours: RegularOpeningHours(openNow: true, weekdayDescriptions: ["Monday 8am - 8pm"]), nationalPhoneNumber: "876123456789")
         mockRestaurantService.searchRestaurantsResult = .success([mockRestaurant])
         
         // Act
@@ -179,7 +179,7 @@ final class Restaurant_Discovery_Take_HomeTests: XCTestCase {
     @MainActor
     func testUpdateFavorite_AddsFavorite() {
         // Given
-        let mockRestaurant = Restaurant(id: "1234", formattedAddress: "1 Highway Ave", rating: 4, userRatingCount: 4, displayName: RestaurantLocalizedText(text: "Ms Lilys"), photos: [], location: RestaurantLocation(latitude: 0, longitude: 0), generativeSummary: nil)
+        let mockRestaurant = Restaurant(id: "1234", formattedAddress: "1 Highway Ave", rating: 4, userRatingCount: 4, displayName: RestaurantLocalizedText(text: "Ms Lilys"), photos: [], location: RestaurantLocation(latitude: 0, longitude: 0), generativeSummary: nil, regularOpeningHours: RegularOpeningHours(openNow: true, weekdayDescriptions: ["Monday 8am - 8pm"]), nationalPhoneNumber: "876123456789", isFavorite: false)
         viewModel.restaurants = [mockRestaurant]
         
         // Act
@@ -193,7 +193,8 @@ final class Restaurant_Discovery_Take_HomeTests: XCTestCase {
     @MainActor
     func testUpdateFavorite_RemovesFavorite() {
         // Given
-        let mockRestaurant = Restaurant(id: "1234", formattedAddress: "1 Highway Ave", rating: 4, userRatingCount: 4, displayName: RestaurantLocalizedText(text: "Ms Lilys"), photos: [], location: RestaurantLocation(latitude: 0, longitude: 0), generativeSummary: nil, isFavorite: true)
+        let mockRestaurant = Restaurant(id: "1234", formattedAddress: "1 Highway Ave", rating: 4, userRatingCount: 4, displayName: RestaurantLocalizedText(text: "Ms Lilys"), photos: [], location: RestaurantLocation(latitude: 0, longitude: 0), generativeSummary: nil, regularOpeningHours: RegularOpeningHours(openNow: true, weekdayDescriptions: ["Monday 8am - 8pm"]), nationalPhoneNumber: "876123456789", isFavorite: true)
+        
         viewModel.restaurants = [mockRestaurant]
         UserDefaults.standard.saveFavorite(restaurant: mockRestaurant)
         

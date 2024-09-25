@@ -8,7 +8,7 @@
 import Foundation
 
 struct RestaurantResponse: Decodable {
-    let places: [Restaurant]
+    let places: [Restaurant]?
 }
 
 struct Restaurant: Identifiable, Decodable, Equatable {
@@ -20,8 +20,24 @@ struct Restaurant: Identifiable, Decodable, Equatable {
     let photos: [RestaurantPhotos]?
     let location: RestaurantLocation
     let generativeSummary: RestaurantGenerativeSummary?
+    let regularOpeningHours: RegularOpeningHours
+    let nationalPhoneNumber: String?
     
+    // Additional properites Added
+    // Keep track of favorited restaurant
     var isFavorite: Bool = false
+    
+    // Handle formating of photosURL
+    var photoURL: URL? {
+            guard let photoReference = photos?.first?.name,
+                  let range = photoReference.range(of: "photos/") else {
+                return nil
+            }
+
+            let photoString = photoReference[range.lowerBound...]
+            let urlString = "https://places.googleapis.com/v1/places/\(id)/\(photoString)/media?maxWidthPx=400&key=AIzaSyAvAaPcSL1SNPUguENa_p2P-SuRaxGUduw"
+            return URL(string: urlString)
+        }
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -32,11 +48,18 @@ struct Restaurant: Identifiable, Decodable, Equatable {
         case photos
         case location
         case generativeSummary
+        case regularOpeningHours
+        case nationalPhoneNumber
     }
     
     static func == (lhs: Restaurant, rhs: Restaurant) -> Bool {
         lhs.id == rhs.id
     }
+}
+
+struct RegularOpeningHours: Decodable {
+    let openNow: Bool
+    let weekdayDescriptions: [String]
 }
 
 struct RestaurantLocation: Decodable {

@@ -14,11 +14,12 @@ class RestaurantsViewModel: ObservableObject {
     @Published var userLocation: RestaurantLocation?
     
     @Published var restaurants: [Restaurant] = []
-    @Published var selectedRestaurant: Restaurant?
+    @Published var selectedRestaurantOnList: Restaurant?
+    @Published var showDetailView: Bool = false
+    
+    @Published var selectedRestaurantOnMap: Restaurant?
     @Published var mapCoordinateRegion: MKCoordinateRegion = .init()
-    
     @Published var searchText: String = ""
-    
     @Published var showMapView: Bool = false
     
     @Published var errorAlertTitle: String = ""

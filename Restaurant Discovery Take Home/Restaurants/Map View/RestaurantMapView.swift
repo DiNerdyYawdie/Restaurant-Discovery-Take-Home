@@ -22,13 +22,13 @@ struct RestaurantMapView: View {
                 VStack {
                     
                     Button {
-                        viewModel.selectedRestaurant = restaurant
+                        viewModel.selectedRestaurantOnMap = restaurant
                         
                         withAnimation {
                             viewModel.mapCoordinateRegion.center = .init(latitude: restaurant.location.latitude, longitude: restaurant.location.longitude)
                         }
                     } label: {
-                        Image(viewModel.selectedRestaurant == restaurant ? .pinSelected : .pinResting)
+                        Image(viewModel.selectedRestaurantOnMap == restaurant ? .pinSelected : .pinResting)
                             .resizable()
                             .frame(width: 26, height: 33)
                     }
@@ -36,7 +36,7 @@ struct RestaurantMapView: View {
                     
                 }
                 .overlay(alignment: .bottom) {
-                    if viewModel.selectedRestaurant == restaurant {
+                    if viewModel.selectedRestaurantOnMap == restaurant {
                         withAnimation {
                             RestaurantCardView(viewModel: RestaurantCardViewModel(restaurant: restaurant,
                                                                                   isFavorite: viewModel.checkIfFavorite(restaurant: restaurant),

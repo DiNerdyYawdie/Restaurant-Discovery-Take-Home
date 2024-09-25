@@ -18,23 +18,4 @@ class RestaurantCardViewModel: ObservableObject {
         self.isFavorite = isFavorite
         self.onFavoriteSelected = onFavoriteSelected
     }
-    
-    func createRestaurantPhotoURL() -> URL? {
-        
-        if let photoReference = restaurant.photos?.first?.name {
-            if let range = photoReference.range(of: "photos/") {
-                // Extract the substring from "photos/" to the end
-                let photoString = photoReference[range.lowerBound...]
-                print(photoString)
-                
-                let urlString = "https://places.googleapis.com/v1/places/\(restaurant.id)/\(photoString)/media?maxWidthPx=400&key=AIzaSyAvAaPcSL1SNPUguENa_p2P-SuRaxGUduw"
-                return URL(string: urlString)
-            } else {
-                return nil
-            }
-        } else {
-            return nil
-        }
-        
-    }
 }
