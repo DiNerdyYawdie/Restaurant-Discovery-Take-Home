@@ -11,19 +11,19 @@ extension UserDefaults {
     
     func getFavorites() -> [String] {
         
-        let favoriteRestaurants = array(forKey: "favorites") as? [String] ?? []
+        let favoriteRestaurants = array(forKey: .favoritesKey) as? [String] ?? []
         return favoriteRestaurants
     }
     
     func saveFavorite(restaurant: Restaurant) {
         var favoriteRestaurants = getFavorites()
         favoriteRestaurants.append(restaurant.id)
-        set(favoriteRestaurants, forKey: "favorites")
+        set(favoriteRestaurants, forKey: .favoritesKey)
     }
     
     func removeFavorite(restaurant: Restaurant) {
         var favoriteRestaurants = getFavorites()
         favoriteRestaurants.removeAll(where: { $0 == restaurant.id })
-        set(favoriteRestaurants, forKey: "favorites")
+        set(favoriteRestaurants, forKey: .favoritesKey)
     }
 }

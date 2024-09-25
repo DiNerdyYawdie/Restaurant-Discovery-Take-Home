@@ -21,7 +21,7 @@ struct RestaurantsView: View {
             HStack(spacing: 8) {
                 Image(.search)
                 
-                TextField("Search restaurants", text: $viewModel.searchText)
+                TextField(LocalizedStringKey(.textFieldPlaceholder), text: $viewModel.searchText)
                     .padding(.vertical, 6)
                     .submitLabel(.search)
                     .onSubmit {
@@ -107,7 +107,7 @@ struct RestaurantsView: View {
                     viewModel.showMapView.toggle()
                 }
             } label: {
-                Label(LocalizedStringKey(viewModel.showMapView ? "List" : "Map"), image: viewModel.showMapView ? .whiteList : .whiteMap)
+                Label(LocalizedStringKey(viewModel.showMapView ? .listButtonTitle : .mapButtonTitle), image: viewModel.showMapView ? .whiteList : .whiteMap)
             }
             .tint(Color("trails-green"))
             .buttonStyle(.borderedProminent)
@@ -117,7 +117,7 @@ struct RestaurantsView: View {
             .padding(.bottom, 24)
         })
         .alert(isPresented: $viewModel.showPermissionsAlert) {
-            Alert(title: Text(viewModel.permissionsAlertTitle), primaryButton: .default(Text("Go to Settings"), action: {
+            Alert(title: Text(viewModel.permissionsAlertTitle), primaryButton: .default(Text(verbatim: .goToSettingsButtonTitle), action: {
                 viewModel.openSettingsToEnableLocationServices()
             }), secondaryButton: .cancel())
         }

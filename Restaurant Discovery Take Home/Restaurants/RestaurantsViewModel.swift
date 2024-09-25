@@ -21,7 +21,7 @@ class RestaurantsViewModel: ObservableObject {
     
     @Published var showMapView: Bool = false
     
-    @Published var permissionsAlertTitle: String = "Turn on location services in settings"
+    @Published var permissionsAlertTitle: String = .goToSettingsTitle
     @Published var showPermissionsAlert: Bool = false
     
     @Published var isLoading: Bool = false
