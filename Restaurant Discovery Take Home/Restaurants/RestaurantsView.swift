@@ -41,7 +41,7 @@ struct RestaurantsView: View {
             if viewModel.showMapView {
                 
                 Map(coordinateRegion: $viewModel.mapCoordinateRegion,
-                    showsUserLocation: false,
+                    showsUserLocation: true,
                     annotationItems: viewModel.restaurants) { restaurant in
                     
                     MapAnnotation(coordinate: .init(latitude: restaurant.location.latitude,
