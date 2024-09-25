@@ -4,16 +4,15 @@
 //
 //  Created by Chad-Michael Muirhead on 9/24/24.
 //
-import CoreLocation
 import Foundation
 @testable import Restaurant_Discovery_Take_Home
 import Combine
 
-class MockLocationService: LocationServices {
+class MockLocationServiceImpl: LocationServices {
     var locationAuthorizationStatusPublisher = PassthroughSubject<Void, Never>()
     var mockLocationAuthStatus: LocationAuthorizationStatus = .notDetermined
     var authorizationRequested: Bool = false
-    var userLocationResult: Result<CLLocation, RestaurantServicesError>?
+    var userLocationResult: Result<RestaurantLocation, RestaurantServicesError>?
     
     func checkLocationAuthorization() -> Restaurant_Discovery_Take_Home.LocationAuthorizationStatus {
         return mockLocationAuthStatus
@@ -25,7 +24,7 @@ class MockLocationService: LocationServices {
         locationAuthorizationStatusPublisher.send(())
     }
     
-    func fetchCurrentLocation() throws -> CLLocation {
+    func fetchCurrentLocation() throws -> RestaurantLocation {
         switch userLocationResult {
         case .success(let location):
             return location

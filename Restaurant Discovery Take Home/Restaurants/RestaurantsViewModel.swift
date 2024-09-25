@@ -11,7 +11,7 @@ import Combine
 @MainActor
 class RestaurantsViewModel: ObservableObject {
     
-    @Published var userLocation: CLLocation?
+    @Published var userLocation: RestaurantLocation?
     
     @Published var restaurants: [Restaurant] = []
     @Published var selectedRestaurant: Restaurant?
@@ -20,6 +20,9 @@ class RestaurantsViewModel: ObservableObject {
     @Published var searchText: String = ""
     
     @Published var showMapView: Bool = false
+    
+    @Published var errorAlertTitle: String = ""
+    @Published var showErrorAlert: Bool = false
     
     @Published var permissionsAlertTitle: String = .goToSettingsTitle
     @Published var showPermissionsAlert: Bool = false
@@ -71,17 +74,24 @@ class RestaurantsViewModel: ObservableObject {
     /// Find restaurants based on user location
     func fetchNearbyRestaurants() async {
         do {
+            isLoading = true
             self.userLocation = try locationServices.fetchCurrentLocation()
             guard let userLocation = self.userLocation else { return }
             
-            self.mapCoordinateRegion = .init(center: userLocation.coordinate,
+            self.mapCoordinateRegion = .init(center: .init(latitude: userLocation.latitude,
+                                                           longitude: userLocation.longitude),
                                              latitudinalMeters: 1000,
                                              longitudinalMeters: 1000)
             
-            let restaurants = try await restaurantServices.fetchNearbyRestaurants(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude, query: searchText)
+            let restaurants = try await restaurantServices.fetchNearbyRestaurants(latitude: userLocation.latitude, longitude: userLocation.longitude, query: searchText)
             self.restaurants = restaurants
+            
+            isLoading = false
+        } catch let customError as RestaurantServicesError {
+            isLoading = false
+            errorAlertTitle = customError.errorMessage
         } catch {
-            print(error)
+            isLoading = false
         }
     }
     
@@ -98,9 +108,11 @@ class RestaurantsViewModel: ObservableObject {
             }
             
             isLoading = false
+        } catch let customError as RestaurantServicesError {
+            isLoading = false
+            errorAlertTitle = customError.errorMessage
         } catch {
             isLoading = false
-            print(error)
         }
     }
     

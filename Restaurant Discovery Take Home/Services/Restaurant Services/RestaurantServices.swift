@@ -17,6 +17,16 @@ enum RestaurantServicesError: Error {
     case decodeError
     case httpError
     case unknown
+    
+    // Can be used to show readbale error messages in an Alert
+    var errorMessage: String {
+        switch self {
+        case .urlError: return "There was an error creating the URL"
+        case .decodeError: return "There was an error decoding the response."
+        case .httpError: return "There was an error with the HTTP request."
+        case .unknown: return "An unknown error occurred."
+        }
+    }
 }
 
 class RestaurantServicesImpl: RestaurantServices {
@@ -29,6 +39,7 @@ class RestaurantServicesImpl: RestaurantServices {
         self.session = session
     }
     
+    // Search for restaurants by text/query
     func searchRestaurants(with query: String) async throws -> [Restaurant] {
         guard let url = URL(string: Endpoints.restaurantsSearch.endpoint) else {
             throw RestaurantServicesError.urlError
@@ -44,7 +55,8 @@ class RestaurantServicesImpl: RestaurantServices {
         request.addValue("*", forHTTPHeaderField: "X-Goog-FieldMask")
         
         // Create the JSON body
-        let requestBody: [String: Any] = ["textQuery": query]
+        let requestBody: [String: Any] = ["textQuery": query,
+                                          "includedType": "restaurant"]
         request.httpBody = try JSONSerialization.data(withJSONObject: requestBody)
         
         do {
@@ -67,6 +79,7 @@ class RestaurantServicesImpl: RestaurantServices {
         }
     }
     
+    // Find restaurants nearby based on user location
     func fetchNearbyRestaurants(latitude: Double, longitude: Double, query: String) async throws -> [Restaurant] {
         guard let url = URL(string: Endpoints.restaurantsNearby.endpoint) else {
             throw RestaurantServicesError.urlError
@@ -82,7 +95,7 @@ class RestaurantServicesImpl: RestaurantServices {
         request.addValue("*", forHTTPHeaderField: "X-Goog-FieldMask")
         
         // Create the JSON body
-        let requestBody = NearbyRequest(locationRestriction: LocationRestriction(circle: LocationCircle(center: LocationCircleCoordinates(latitude: latitude, longitude: longitude), radius: 500.0)))
+        let requestBody = NearbyRequest(includedTypes: ["restaurant"], locationRestriction: LocationRestriction(circle: LocationCircle(center: LocationCircleCoordinates(latitude: latitude, longitude: longitude), radius: 500.0)))
                 request.httpBody = try JSONEncoder().encode(requestBody)
         
         do {

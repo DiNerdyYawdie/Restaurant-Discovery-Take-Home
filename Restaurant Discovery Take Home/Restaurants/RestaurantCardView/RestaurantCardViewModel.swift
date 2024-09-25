@@ -19,7 +19,6 @@ class RestaurantCardViewModel: ObservableObject {
         self.onFavoriteSelected = onFavoriteSelected
     }
     
-    // TODO: Fix construct of image URL
     func createRestaurantPhotoURL() -> URL? {
         
         if let photoReference = restaurant.photos?.first?.name {

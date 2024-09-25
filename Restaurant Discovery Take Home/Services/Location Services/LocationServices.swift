@@ -12,7 +12,7 @@ protocol LocationServices {
     var locationAuthorizationStatusPublisher: PassthroughSubject<Void, Never> { get }
     func checkLocationAuthorization() -> LocationAuthorizationStatus
     func requestWhenInUseAuthorization()
-    func fetchCurrentLocation() throws -> CLLocation
+    func fetchCurrentLocation() throws -> RestaurantLocation
 }
 
 enum LocationServicesError: Error {
@@ -43,7 +43,6 @@ class LocationServicesImpl: NSObject, LocationServices {
         case .authorizedAlways, .authorizedWhenInUse:
             return LocationAuthorizationStatus.authorized
         @unknown default:
-            print("default")
             return LocationAuthorizationStatus.denied
         }
     }
@@ -52,13 +51,13 @@ class LocationServicesImpl: NSObject, LocationServices {
         locationManager.requestWhenInUseAuthorization()
     }
     
-    func fetchCurrentLocation() throws -> CLLocation {
+    func fetchCurrentLocation() throws -> RestaurantLocation {
         if locationManager.authorizationStatus == .authorizedWhenInUse || locationManager.authorizationStatus == .authorizedWhenInUse {
             
             guard let userLocation = locationManager.location else {
                 throw LocationServicesError.locationNotFound
             }
-            return userLocation
+            return RestaurantLocation(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
         } else {
             throw LocationServicesError.locationServicesNotAvailable
         }

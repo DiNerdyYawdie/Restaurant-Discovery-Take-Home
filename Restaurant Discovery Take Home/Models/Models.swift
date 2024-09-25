@@ -13,7 +13,6 @@ struct RestaurantResponse: Decodable {
 
 struct Restaurant: Identifiable, Decodable, Equatable {
     let id: String
-    let types: [String]
     let formattedAddress: String
     let rating: Double?
     let userRatingCount: Int?
@@ -26,7 +25,6 @@ struct Restaurant: Identifiable, Decodable, Equatable {
     
     enum CodingKeys: String, CodingKey {
         case id
-        case types
         case formattedAddress
         case rating
         case userRatingCount
@@ -57,6 +55,7 @@ struct RestaurantPhotos: Decodable {
 }
 
 struct NearbyRequest: Encodable {
+    let includedTypes: [String]
     let locationRestriction: LocationRestriction
 }
 

@@ -101,6 +101,12 @@ struct RestaurantsView: View {
         .task {
             await viewModel.checkLocationAuthorization()
         }
+        .overlay(content: {
+            if viewModel.isLoading {
+                ProgressView()
+                    .tint(Color(.trailsGreen))
+            }
+        })
         .overlay(alignment: .centerLastTextBaseline, content: {
             Button {
                 DispatchQueue.main.async {
@@ -109,7 +115,7 @@ struct RestaurantsView: View {
             } label: {
                 Label(LocalizedStringKey(viewModel.showMapView ? .listButtonTitle : .mapButtonTitle), image: viewModel.showMapView ? .whiteList : .whiteMap)
             }
-            .tint(Color("trails-green"))
+            .tint(Color(.trailsGreen))
             .buttonStyle(.borderedProminent)
             .buttonBorderShape(.capsule)
             .controlSize(.extraLarge)

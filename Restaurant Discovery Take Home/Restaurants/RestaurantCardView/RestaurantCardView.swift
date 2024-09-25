@@ -76,10 +76,3 @@ struct RestaurantCardView: View {
         .shadow(color: Color("card-shadow").opacity(0.2), radius: 5, x: 0, y: 16)
     }
 }
-
-//
-//#Preview {
-//    RestaurantCardView(isFavorite: .init(wrappedValue: false), restaurant: Restaurant(id: UUID().uuidString, types: ["Jamaican"], formattedAddress: "1 Hayes Lane", rating: 4.0, userRatingCount: 100, displayName: RestaurantLocalizedText(text: "Jahmske"), photos: [RestaurantPhotos(name: "", widthPx: 1, heightPx: 1)], location: RestaurantLocation(latitude: 0, longitude: 0), generativeSummary: nil)) { _ in
-//        
-//    }
-//}
