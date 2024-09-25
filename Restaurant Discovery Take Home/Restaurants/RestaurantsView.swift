@@ -36,6 +36,11 @@ struct RestaurantsView: View {
             .shadow(radius: 1)
             .padding(.horizontal)
             .padding(.bottom, 15)
+            .alert(isPresented: $viewModel.showPermissionsAlert) {
+                Alert(title: Text(viewModel.permissionsAlertTitle), primaryButton: .default(Text(verbatim: .goToSettingsButtonTitle), action: {
+                    viewModel.openSettingsToEnableLocationServices()
+                }), secondaryButton: .cancel())
+            }
             
             
             if viewModel.showMapView {
@@ -54,6 +59,9 @@ struct RestaurantsView: View {
                 }
                 .listStyle(.plain)
                 .background(Color("background-color"))
+                .alert(isPresented: $viewModel.showErrorAlert) {
+                    Alert(title: Text(viewModel.errorAlertTitle))
+                }
             }
             
         }
@@ -81,11 +89,7 @@ struct RestaurantsView: View {
             .frame(width: 117, height: 48)
             .padding(.bottom, 24)
         })
-        .alert(isPresented: $viewModel.showPermissionsAlert) {
-            Alert(title: Text(viewModel.permissionsAlertTitle), primaryButton: .default(Text(verbatim: .goToSettingsButtonTitle), action: {
-                viewModel.openSettingsToEnableLocationServices()
-            }), secondaryButton: .cancel())
-        }
+        
     }
 }
 

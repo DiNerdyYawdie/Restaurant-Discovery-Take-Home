@@ -90,6 +90,7 @@ class RestaurantsViewModel: ObservableObject {
         } catch let customError as RestaurantServicesError {
             isLoading = false
             errorAlertTitle = customError.errorMessage
+            showErrorAlert.toggle()
         } catch {
             isLoading = false
         }
@@ -111,6 +112,7 @@ class RestaurantsViewModel: ObservableObject {
         } catch let customError as RestaurantServicesError {
             isLoading = false
             errorAlertTitle = customError.errorMessage
+            showErrorAlert.toggle()
         } catch {
             isLoading = false
         }
